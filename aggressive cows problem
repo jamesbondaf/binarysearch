@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+bool place_cows(int stall[], int mid, int n, int cow)
+{
+    int lastecow = stall[0];
+    int cnt = 1;
+    for (int i = 1; i < n; i++)
+    {
+        if ( stall[i]-lastecow >= mid)
+        {
+            lastcow = stall[i];
+            cnt++;
+            if (cnt == cow)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+int main()
+{
+    int n;
+    cin >> n;
+    int cows;
+    cin >> cows;
+    int stall[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> stall[i];
+    }
+    sort(stall, stall + n);
+    int s = 0;
+    int e = stall[n - 1] - stall[0];
+    int mid = s + (e - s) / 2;
+    int ans = 0;
+    while (s <= e)
+    {
+        mid = s + (e - s) / 2;
+        bool check = place_cows(stall, mid, n, cows);
+        if (check)
+        {
+            ans = mid;
+            s = mid + 1;
+        }
+        else
+        {
+            e = mid - 1;
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
+}
